@@ -11,4 +11,5 @@ public interface EspecialidadMedicaRepository extends JpaRepository<Especialidad
     Optional<EspecialidadMedicaEntity> findByEspecialidad(String especialidad);
 
     List<EspecialidadMedicaEntity> findByEstado(Boolean estado);
+
 }

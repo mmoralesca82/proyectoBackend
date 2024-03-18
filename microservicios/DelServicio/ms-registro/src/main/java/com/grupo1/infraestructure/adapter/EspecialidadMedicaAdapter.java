@@ -1,11 +1,9 @@
 package com.grupo1.infraestructure.adapter;
 
 import com.grupo1.domain.aggregates.constants.Constants;
-import com.grupo1.domain.aggregates.dto.DoctorDTO;
 import com.grupo1.domain.aggregates.dto.EspecialidadMedicaDTO;
 import com.grupo1.domain.aggregates.response.ResponseBase;
 import com.grupo1.domain.ports.out.EspecialidadMedicaServiceOut;
-import com.grupo1.infraestructure.entity.DoctorEntity;
 import com.grupo1.infraestructure.entity.EspecialidadMedicaEntity;
 import com.grupo1.infraestructure.mapper.GenericMapper;
 import com.grupo1.infraestructure.repository.EspecialidadMedicaRepository;
@@ -13,7 +11,6 @@ import com.grupo1.infraestructure.util.CurrentTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

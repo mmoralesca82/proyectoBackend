@@ -14,6 +14,16 @@ public class NombreAnalisisServiceImpl implements NombreAnalisisServiceIn {
     private final NombreAnalisisServiceOut nombreAnalisisServiceOut;
 
     @Override
+    public ResponseBase findNombreAnalisisIn(String nombreAnalisis) {
+        return nombreAnalisisServiceOut.findNombreAnalisisOut(nombreAnalisis);
+    }
+
+    @Override
+    public ResponseBase findAllEnableNombreAnalisisIn() {
+        return nombreAnalisisServiceOut.findAllEnableNombreAnalisisOut();
+    }
+
+    @Override
     public ResponseBase registerNombreAnalisisIn(NombreAnalisisDTO nombreAnalisisDTO, String username) {
         return nombreAnalisisServiceOut.registerNombreAnalisisOut(nombreAnalisisDTO, username);
     }

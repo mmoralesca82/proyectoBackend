@@ -4,10 +4,11 @@ package com.grupo1.infraestructure.mapper;
 import com.grupo1.domain.aggregates.dto.DirecccionDTO;
 import com.grupo1.domain.aggregates.dto.DoctorDTO;
 import com.grupo1.domain.aggregates.dto.EspecialidadMedicaDTO;
-import com.grupo1.domain.aggregates.request.RequestDoctor;
+import com.grupo1.domain.aggregates.dto.NombreAnalisisDTO;
 import com.grupo1.infraestructure.entity.DirecccionEntity;
 import com.grupo1.infraestructure.entity.DoctorEntity;
 import com.grupo1.infraestructure.entity.EspecialidadMedicaEntity;
+import com.grupo1.infraestructure.entity.NombreAnalisisEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,10 @@ public class GenericMapper {
 
     public EspecialidadMedicaDTO mapEspecialidadEntityToEspecialidadDTO(EspecialidadMedicaEntity especilidad){
         return modelMapper.map(especilidad, EspecialidadMedicaDTO.class);
+    }
+
+    public NombreAnalisisDTO mapNombreAnalisisEntityToNombreAnalisisDTO(NombreAnalisisEntity analisis){
+        return modelMapper.map(analisis, NombreAnalisisDTO.class);
     }
 
 }

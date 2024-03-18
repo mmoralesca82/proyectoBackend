@@ -20,7 +20,7 @@ import java.util.Set;
 public class VerifyToken {
 
     private final VerifySecurityServiceIn verifySecurityServiceIn;
-    private final Set<String> roles = new HashSet<>();
+    private Set<String> roles = new HashSet<>();
 
     public void addRole(String setRol){
         roles.add(setRol);

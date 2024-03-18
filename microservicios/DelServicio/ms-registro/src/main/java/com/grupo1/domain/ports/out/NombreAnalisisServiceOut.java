@@ -5,6 +5,9 @@ import com.grupo1.domain.aggregates.response.ResponseBase;
 
 public interface NombreAnalisisServiceOut {
 
+    ResponseBase findNombreAnalisisOut(String nombreAnalisis);
+
+    ResponseBase findAllEnableNombreAnalisisOut();
     ResponseBase registerNombreAnalisisOut(NombreAnalisisDTO nombreAnalisisDTO, String username);
 
     ResponseBase  updateNombreAnalisisOut(NombreAnalisisDTO nombreAnalisisDTO, String username);

@@ -20,6 +20,38 @@ public class NombreAnalisisController {
 
     private final VerifyToken verifyToken;
 
+
+    @GetMapping("/{nombreAnalisis}")
+    public ResponseBase findNombreAnalisis(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+                                         @PathVariable String nombreAnalisis){
+        //Add roles autorizados aquí
+        verifyToken.addRole("ADMIN");
+        verifyToken.addRole("SYSTEM");
+        //////////////////////////
+        String username = verifyToken.verifyToken(token);
+        if(username != null){
+            return  nombreAnalisisServiceIn.findNombreAnalisisIn(nombreAnalisis);
+        }
+        return new ResponseBase(403,"No autorizado.",null);
+
+    }
+
+    @GetMapping("/all")
+    public ResponseBase findAllEnableNombreAnalisis(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        //Add roles autorizados aquí
+        verifyToken.addRole("ADMIN");
+        verifyToken.addRole("SYSTEM");
+        //////////////////////////
+        String username = verifyToken.verifyToken(token);
+        if(username != null){
+            return  nombreAnalisisServiceIn.findAllEnableNombreAnalisisIn();
+        }
+        return new ResponseBase(403,"No autorizado.",null);
+
+    }
+
+
+
     @PostMapping
     public ResponseBase registerNombreAnalisis(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                @RequestBody NombreAnalisisDTO nombreAnalisisDTO){

@@ -1,7 +1,6 @@
 package com.grupo1.infraestructure.adapter;
 
 import com.grupo1.domain.aggregates.constants.Constants;
-import com.grupo1.domain.aggregates.dto.DirecccionDTO;
 import com.grupo1.domain.aggregates.dto.DoctorDTO;
 import com.grupo1.domain.aggregates.request.RequestDoctor;
 import com.grupo1.domain.aggregates.response.MsExternalToReniecResponse;
@@ -17,11 +16,11 @@ import com.grupo1.infraestructure.repository.EspecialidadMedicaRepository;
 import com.grupo1.infraestructure.rest.client.ToMSExternalApi;
 import com.grupo1.infraestructure.util.CurrentTime;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -89,8 +88,8 @@ public class DoctorAdapter implements DoctorServiceOut {
         ///////////////////////Validar si el registro medico existe en base de datos ///////////
         Optional<DoctorEntity> getDoctorByRegistro = doctorRepository.findByRegistroMedico(requestDoctor.getRegistroMedico());
         if(getDoctorByRegistro.isPresent()){
-            return  new ResponseBase(406, "Ya existe un registro medico con el numero de registro medico."+
-                    requestDoctor.getNumDocumento(), null);
+            return  new ResponseBase(406, "Ya existe un medico con el numero de registro medico."+
+                    requestDoctor.getRegistroMedico(), null);
         }
         ////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////Buscar DNI en Reniec///////////////////// ///////////////////////
@@ -125,18 +124,58 @@ public class DoctorAdapter implements DoctorServiceOut {
 
     @Override
     public ResponseBase updateDoctorOut(RequestDoctor requestDoctor, String username) {
-        return new ResponseBase(200, "Desde DoctorAdapter/update, " +
-                "registrado por "+username, null);
+        if(requestDoctor.getNumDocumento()==null || requestDoctor.getNumDocumento().isEmpty())
+            return  new ResponseBase(406, "Se requiere numero de documento.", null);
+        Optional<DoctorEntity> getDoctor = doctorRepository.findByNumDocumento(requestDoctor.getNumDocumento());
+        if(getDoctor.isEmpty()){
+            return new ResponseBase(404, "No se encontro el registro.", null);
+        }
+        if(!(requestDoctor.getRegistroMedico()==null || requestDoctor.getRegistroMedico().isEmpty())) {
+            Optional<DoctorEntity> getDoctorByRegMedico = doctorRepository.findByRegistroMedico(requestDoctor.getRegistroMedico());
+            if(getDoctorByRegMedico.isPresent() && !Objects.equals(getDoctorByRegMedico, getDoctor)) {
+                return  new ResponseBase(406, "Ya existe un medico con el numero de registro medico."+
+                        requestDoctor.getRegistroMedico(), null);
+            }
+            getDoctor.get().setRegistroMedico(requestDoctor.getRegistroMedico());
+        }
+        if(!(requestDoctor.getGenero()==null||
+                requestDoctor.getGenero().isEmpty())) getDoctor.get().setGenero(requestDoctor.getGenero());
+        if(!(requestDoctor.getTelefono()==null || requestDoctor.getTelefono().isEmpty()))
+            getDoctor.get().setTelefono(requestDoctor.getTelefono());
+        if(!(requestDoctor.getEspecialidad()==null || requestDoctor.getEspecialidad().isEmpty())){
+            Optional<EspecialidadMedicaEntity> getEspecialidad = especialidadMedicaRepository.findByEspecialidad(requestDoctor.getEspecialidad());
+            getEspecialidad.ifPresent(especialidadMedicaEntity -> getDoctor.get().setEspecialidadMedica(especialidadMedicaEntity));
+        }
+       if(!(requestDoctor.getDireccion().getVia()==null || requestDoctor.getDireccion().getVia().isEmpty()))
+           getDoctor.get().getDireccion().setVia(requestDoctor.getDireccion().getVia());
+        if(!(requestDoctor.getDireccion().getNumeroPredio()==null || requestDoctor.getDireccion().getNumeroPredio().toString().isEmpty()))
+            getDoctor.get().getDireccion().setNumeroPredio(requestDoctor.getDireccion().getNumeroPredio());
+        if(!(requestDoctor.getDireccion().getInterior()==null || requestDoctor.getDireccion().getInterior().isEmpty()))
+            getDoctor.get().getDireccion().setInterior(requestDoctor.getDireccion().getInterior());
+        if(!(requestDoctor.getDireccion().getReferencia()==null || requestDoctor.getDireccion().getReferencia().isEmpty()))
+            getDoctor.get().getDireccion().setReferencia(requestDoctor.getDireccion().getReferencia());
+        if(!(requestDoctor.getDireccion().getDistrito()==null || requestDoctor.getDireccion().getDistrito().isEmpty()))
+            getDoctor.get().getDireccion().setDistrito(requestDoctor.getDireccion().getDistrito());
+        if(!(requestDoctor.getDireccion().getProvincia()==null || requestDoctor.getDireccion().getProvincia().isEmpty()))
+            getDoctor.get().getDireccion().setProvincia(requestDoctor.getDireccion().getProvincia());
+        if(!(requestDoctor.getDireccion().getDepartamento()==null || requestDoctor.getDireccion().getDepartamento().isEmpty()))
+            getDoctor.get().getDireccion().setDepartamento(requestDoctor.getDireccion().getDepartamento());
+        return new ResponseBase(200, "Registro actualizado",doctorRepository.save(getDoctor.get()));
     }
+
+
 
     @Override
     public ResponseBase deleteDoctorOut(String numDoc, String username) {
-        return new ResponseBase(200, "Desde DoctorAdapter/delete, " +
-                "registrado por "+username, null);
-    }
+        Optional<DoctorEntity> findDoctor = doctorRepository.findByNumDocumento(numDoc);
+        if(findDoctor.isPresent()){
+            findDoctor.get().setEstado(Constants.STATUS_INACTIVE);
+            findDoctor.get().setUsuarioEliminacion(username);
+            findDoctor.get().setFechaEliminacion(CurrentTime.getTimestamp());
 
-//    private Timestamp getTimestamp(){
-//        long currentTime = System.currentTimeMillis();
-//        return new Timestamp(currentTime);
-//    }
+            return new ResponseBase(202, "Registro eliminado",
+                    doctorRepository.save(findDoctor.get()));
+        }
+        return new ResponseBase(404, "No se encontro al doctor.", null);
+    }
 }

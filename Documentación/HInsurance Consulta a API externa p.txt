@@ -1,0 +1,76 @@
+API Externa - HInsurance: (PORT: 9000) Consulta a API externa para obtener información de existencia y cobertura de seguros.
+		
+		Enpoints: GET http://localhost:9000/rimac/api/v1/find?documento=41947273&cobertura=LAB3 (requiere TOKEN: V3ZKz7ZYBU68tiePyTI8MpreRwz12UjjCRtEBzT9oWTAplkFITvRumzGO5Rw2lzh)
+         	 
+		Nivel de seguridad: Por token
+		Coberturas: LAB1, LAB2, LAB3
+			    MED1, MED2, MED3
+
+MS-Externalapi Service: (PORT: 8000) Pasarela para consumir APIs externas:
+	
+		Endpoints: GET http://localhost:8000/ms-externalapi/v1/reniec/70242482
+			   GET http://localhost:8000/ms-externalapi/v1/insurance/rimac?documento=41947273&cobertura=MED3	   
+
+MS-Security Service: (PORT: 8095)  Validación de autorización de acceso para todas las API
+		
+		Endpoints: POST http://localhost:8095/ms-security/v1/autenticacion/login
+			   GET http://localhost:8095/ms-security/v1/autenticacion/verify  (requiere JWT)
+		
+			FOR SYSTEM ROL ONLY: 
+			   POST http://localhost:8095/ms-security/v1/system/register  (requiere JWT)
+			   GET, PUT, DELETE  http://localhost:8095/ms-security/v1/system/{id}	  (requiere JWT)          
+			   
+
+		Nivel de Seguridad: Creación, modificación y eliminado lógico: SYSTEM
+		Entidades involucradas: Users, Rol (UserDB)		
+
+
+MS-Registro Service:(PORT: 8020) Registro de pacientes y doctores:
+		
+		Nivel de seguridad:
+			Registro/modificacion/eliminacion de pacientes: USER
+			Registro/modificacion/eliminacion de doctores:  ADMIN
+			Registro/modificacion/eliminacion EspecialidadMédidca: ADMIN
+			Registro/modificacion/eliminacion NombreAnalisis: ADMIN
+
+ 		Entidades involucradas: (DB: HospService)
+			Paciente
+			ContactoEmergencia
+			EspecialidadMedica
+			NombreAnalisis
+			Direccion 
+			Doctor 
+
+MS-Medicina Service: (PORT: 8030) Registro y atención de Triaje y Procedimiento médico.
+			
+		Nivel de seguridad:
+			Registro/modificacion y atención de triaje: NURSE
+			Registro de procedimiento médico: USER
+			Modificacion de prodcimiento médico: USER, DOCTOR
+
+ 		Entidades involucradas: (DB: HospService)
+			Paciente 
+			Doctor	
+			Triaje 
+			ConsultaMedica 
+			ProcedimientoMedico 
+
+MS-Laboratorio Service: (PORT: 8040) Registro y atención de Análisis clínicos
+		
+		Nivel de seguridad:
+			Registro/modificacion de análisis clínico: DOCTOR
+			Atención de análisis clínico: LAB
+
+ 		Entidades involucradas: (DB: HospService)
+			
+			Paciente 
+			Doctor	
+			AnálisiClínico
+
+
+
+
+
+			
+			
+		

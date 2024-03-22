@@ -2,8 +2,7 @@ package com.grupo1.infraestructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -11,6 +10,9 @@ import java.sql.Timestamp;
 @Table(name="doctor")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class DoctorEntity {
 
     @Id

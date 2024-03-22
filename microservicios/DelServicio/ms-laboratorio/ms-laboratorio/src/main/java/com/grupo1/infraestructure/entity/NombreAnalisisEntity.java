@@ -1,6 +1,7 @@
 package com.grupo1.infraestructure.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

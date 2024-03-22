@@ -15,4 +15,6 @@ public interface DoctorServiceOut {
     ResponseBase  updateDoctorOut(RequestDoctor requestDoctor, String username);
 
     ResponseBase  deleteDoctorOut(String numDoc, String username);
+
+
 }

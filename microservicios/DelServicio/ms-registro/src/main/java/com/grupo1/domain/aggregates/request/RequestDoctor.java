@@ -12,8 +12,8 @@ public class RequestDoctor {
     private String genero;
     private String registroMedico;
     private String telefono;
-
     private String especialidad;
+
     private DirecccionDTO direccion;
 
 

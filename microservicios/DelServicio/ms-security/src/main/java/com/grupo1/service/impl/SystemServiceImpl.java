@@ -26,14 +26,14 @@ public class SystemServiceImpl implements SystemService {
 
 
     @Override
-    public ResponseEntity<UsuarioEntity> createUsuario(SystemRequest usuarioRequest) {
-        Optional<UsuarioEntity> existingUser = usuarioRepository.findByUsername(usuarioRequest.getUsername());
-        if (existingUser.isPresent() || usuarioRequest.getUsername() == null ||
-                usuarioRequest.getPassword()== null || usuarioRequest.getEmail()== null ||
-                usuarioRequest.getTelefono()== null) {
+    public ResponseEntity<UsuarioEntity> createUsuario(SystemRequest systemRequest) {
+        Optional<UsuarioEntity> existingUser = usuarioRepository.findByUsername(systemRequest.getUsername());
+        if (existingUser.isPresent() || systemRequest.getUsername() == null ||
+                systemRequest.getPassword()== null || systemRequest.getEmail()== null ||
+                systemRequest.getTelefono()== null) {
             return ResponseEntity.badRequest().body(null);
         }
-        return getUsuarioResponseEntity(0L, usuarioRequest, "create");
+        return getUsuarioResponseEntity(0L, systemRequest, "create");
     }
 
     @Override
@@ -43,18 +43,18 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public ResponseEntity<UsuarioEntity> updateUsuario(Long id, SystemRequest usuarioRequest, String subjectFromToken) {
+    public ResponseEntity<UsuarioEntity> updateUsuario(Long id, SystemRequest systemRequest, String subjectFromToken) {
         Optional<UsuarioEntity> existingUsuario = usuarioRepository.findById(id);
         if (existingUsuario.isPresent()) {
-            if (usuarioRequest.getUsername() != null && // se agrega esta linea para permitir modificar otros campos que
+            if (systemRequest.getUsername() != null && // se agrega esta linea para permitir modificar otros campos que
                     //no sean el userName, como password por ejemplo.
-                    !usuarioRequest.getUsername().equals(existingUsuario.get().getUsername())) {
-                Optional<UsuarioEntity> userWithNewUsername = usuarioRepository.findByUsername(usuarioRequest.getUsername());
+                    !systemRequest.getUsername().equals(existingUsuario.get().getUsername())) {
+                Optional<UsuarioEntity> userWithNewUsername = usuarioRepository.findByUsername(systemRequest.getUsername());
                 if (userWithNewUsername.isPresent()) {
                     return ResponseEntity.badRequest().body(null);
                 }
             }
-            return getUsuarioResponseEntity(id, usuarioRequest, "update");
+            return getUsuarioResponseEntity(id, systemRequest, "update");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -75,11 +75,11 @@ public class SystemServiceImpl implements SystemService {
         }
     }
 
-    private ResponseEntity<UsuarioEntity> getUsuarioResponseEntity(Long id, SystemRequest usuarioRequest, String typeRequest) {
+    private ResponseEntity<UsuarioEntity> getUsuarioResponseEntity(Long id, SystemRequest systemRequest, String typeRequest) {
         Set<RolEntity> assignedRoles = new HashSet<>();
         UsuarioEntity usuario = new UsuarioEntity();
-        if(usuarioRequest.getRoles() != null){
-            for (String roles : usuarioRequest.getRoles()) { //Los roles vienen explícitos (ADMIN, USER, etc)
+        if(systemRequest.getRoles() != null){
+            for (String roles : systemRequest.getRoles()) { //Los roles vienen explícitos (ADMIN, USER, etc)
                 Optional<RolEntity> rol = rolRepository.findByNombreRol(roles);
                 //return ResponseEntity.badRequest().body(null);
                 rol.ifPresent(assignedRoles::add);
@@ -89,11 +89,11 @@ public class SystemServiceImpl implements SystemService {
         }
 
         if(typeRequest.equals("update")){usuario=usuarioRepository.findById(id).get();}
-        if(usuarioRequest.getUsername() != null){usuario.setUsername(usuarioRequest.getUsername());}
-        if(usuarioRequest.getPassword() != null){usuario.setPassword(new BCryptPasswordEncoder()
-                .encode(usuarioRequest.getPassword()));}
-        if(usuarioRequest.getEmail() != null){usuario.setEmail(usuarioRequest.getEmail());}
-        if(usuarioRequest.getTelefono() != null){usuario.setTelefono(usuarioRequest.getTelefono());}
+        if(systemRequest.getUsername() != null){usuario.setUsername(systemRequest.getUsername());}
+        if(systemRequest.getPassword() != null){usuario.setPassword(new BCryptPasswordEncoder()
+                .encode(systemRequest.getPassword()));}
+        if(systemRequest.getEmail() != null){usuario.setEmail(systemRequest.getEmail());}
+        if(systemRequest.getTelefono() != null){usuario.setTelefono(systemRequest.getTelefono());}
         if(!assignedRoles.isEmpty()){usuario.setRoles(assignedRoles);} // Asignamos los roles.
 
         UsuarioEntity updatedUsuario = usuarioRepository.save(usuario);

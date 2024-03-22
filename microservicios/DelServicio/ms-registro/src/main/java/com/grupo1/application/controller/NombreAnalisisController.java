@@ -25,7 +25,6 @@ public class NombreAnalisisController {
     public ResponseBase findNombreAnalisis(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                          @PathVariable String nombreAnalisis){
         //Add roles autorizados aquí
-        verifyToken.addRole("ADMIN");
         verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
@@ -33,7 +32,6 @@ public class NombreAnalisisController {
             return  nombreAnalisisServiceIn.findNombreAnalisisIn(nombreAnalisis);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @GetMapping("/all")
@@ -47,24 +45,19 @@ public class NombreAnalisisController {
             return  nombreAnalisisServiceIn.findAllEnableNombreAnalisisIn();
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
-
-
 
     @PostMapping
     public ResponseBase registerNombreAnalisis(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                @RequestBody NombreAnalisisDTO nombreAnalisisDTO){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  nombreAnalisisServiceIn.registerNombreAnalisisIn(nombreAnalisisDTO, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @PutMapping
@@ -72,14 +65,12 @@ public class NombreAnalisisController {
                                            @RequestBody NombreAnalisisDTO nombreAnalisisDTO){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  nombreAnalisisServiceIn.updateNombreAnalisisIn(nombreAnalisisDTO, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @DeleteMapping("/{id}")
@@ -87,13 +78,12 @@ public class NombreAnalisisController {
                                            @PathVariable Long id){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  nombreAnalisisServiceIn.deleteNombreAnalisisIn(id, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
+
 }

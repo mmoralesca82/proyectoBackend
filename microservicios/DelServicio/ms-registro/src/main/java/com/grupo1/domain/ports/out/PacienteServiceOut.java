@@ -7,6 +7,10 @@ import com.grupo1.domain.aggregates.response.ResponseBase;
 
 public interface PacienteServiceOut {
 
+    ResponseBase buscarDoctorOut(String numDoc);
+
+    ResponseBase buscarAllEnableDoctorOut();
+
     ResponseBase  registerPacienteOut(RequestPaciente requestPaciente, String username);
 
     ResponseBase  updatePacienteOut(RequestPaciente requestPaciente, String username);

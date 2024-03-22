@@ -16,6 +16,7 @@ import com.grupo1.infraestructure.repository.EspecialidadMedicaRepository;
 import com.grupo1.infraestructure.rest.client.ToMSExternalApi;
 import com.grupo1.infraestructure.util.CurrentTime;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class DoctorAdapter implements DoctorServiceOut {
     private final ToMSExternalApi toMSExternalApi;
     private final GenericMapper genericMapper;
 
+
     @Override
     public ResponseBase buscarDoctorOut(String numDoc) {
         Optional<DoctorEntity> getDoctor = doctorRepository.findByNumDocumento(numDoc);
@@ -44,13 +46,14 @@ public class DoctorAdapter implements DoctorServiceOut {
         return new ResponseBase(404, "No se encontro la informacion", null);
     }
 
+
     @Override
     public ResponseBase buscarAllEnableDoctorOut() {
         List<DoctorDTO> doctorDTOList = new ArrayList<>();
         List<DoctorEntity> doctorEntities = doctorRepository.findByEstado(true);
         for(DoctorEntity doctor : doctorEntities){
-            DoctorDTO doctorDTO = genericMapper.mapDoctorEntityToDoctorDTO(doctor);
-            doctorDTOList.add(doctorDTO);
+           DoctorDTO doctorDTO = genericMapper.mapDoctorEntityToDoctorDTO(doctor);
+           doctorDTOList.add(doctorDTO);
         }
         return  new ResponseBase(302, "Informacion encotrada con exito", doctorDTOList);
     }
@@ -94,7 +97,7 @@ public class DoctorAdapter implements DoctorServiceOut {
         ////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////Buscar DNI en Reniec///////////////////// ///////////////////////
         MsExternalToReniecResponse getInfoReniec = toMSExternalApi.getInfoExtReniec(requestDoctor.getNumDocumento());
-        if(getInfoReniec.getApellidoMaterno()==null){
+        if(getInfoReniec.getApellidoMaterno()==null || getInfoReniec.getApellidoMaterno().isEmpty()){
             return  new ResponseBase(406, "El documento "+requestDoctor.getNumDocumento()+
                     " no existe en Reniec.", null);
         }
@@ -105,18 +108,21 @@ public class DoctorAdapter implements DoctorServiceOut {
         direccion.setEstado(Constants.STATUS_ACTIVE);
         direccion = direcccionRepository.save(direccion);
 
-        DoctorEntity doctor = new DoctorEntity();
-        doctor.setNumDocumento(requestDoctor.getNumDocumento());
-        doctor.setGenero(requestDoctor.getGenero());
-        doctor.setRegistroMedico(requestDoctor.getRegistroMedico());
-        doctor.setTelefono(requestDoctor.getTelefono());
-        doctor.setNombre(getInfoReniec.getNombres());
-        doctor.setApellido(getInfoReniec.getApellidoPaterno()+" "+getInfoReniec.getApellidoMaterno());
-        doctor.setUsuarioCreacion(username);
-        doctor.setFechaCreacion(CurrentTime.getTimestamp());
-        doctor.setEstado(Constants.STATUS_ACTIVE);
-        doctor.setDireccion(direccion);
-        doctor.setEspecialidadMedica(getEspecialidad.get());
+        DoctorEntity doctor = DoctorEntity.builder()
+                .numDocumento(requestDoctor.getNumDocumento())
+                .genero(requestDoctor.getGenero())
+                .registroMedico(requestDoctor.getRegistroMedico())
+                .telefono(requestDoctor.getTelefono())
+                .nombre(getInfoReniec.getNombres())
+                .apellido(getInfoReniec.getApellidoPaterno()+" "+getInfoReniec.getApellidoMaterno())
+                .usuarioCreacion(username)
+                .fechaCreacion(CurrentTime.getTimestamp())
+                .estado(Constants.STATUS_ACTIVE)
+                .direccion(direccion)
+                .especialidadMedica(getEspecialidad.get())
+                .build();
+
+
         doctor = doctorRepository.save(doctor);
 
         return new ResponseBase(201, "Registrado con exito.", doctor );
@@ -138,15 +144,17 @@ public class DoctorAdapter implements DoctorServiceOut {
             }
             getDoctor.get().setRegistroMedico(requestDoctor.getRegistroMedico());
         }
+        if(!(requestDoctor.getEspecialidad()==null || requestDoctor.getEspecialidad().isEmpty())){
+            Optional<EspecialidadMedicaEntity> getEspecialidad = especialidadMedicaRepository.findByEspecialidad(requestDoctor.getEspecialidad());
+            if(getEspecialidad.isEmpty())
+                return new ResponseBase(404, "No se encontro la especialidad medica.", null);
+            getDoctor.get().setEspecialidadMedica(getEspecialidad.get());
+        }
         if(!(requestDoctor.getGenero()==null||
                 requestDoctor.getGenero().isEmpty())) getDoctor.get().setGenero(requestDoctor.getGenero());
         if(!(requestDoctor.getTelefono()==null || requestDoctor.getTelefono().isEmpty()))
             getDoctor.get().setTelefono(requestDoctor.getTelefono());
-        if(!(requestDoctor.getEspecialidad()==null || requestDoctor.getEspecialidad().isEmpty())){
-            Optional<EspecialidadMedicaEntity> getEspecialidad = especialidadMedicaRepository.findByEspecialidad(requestDoctor.getEspecialidad());
-            getEspecialidad.ifPresent(especialidadMedicaEntity -> getDoctor.get().setEspecialidadMedica(especialidadMedicaEntity));
-        }
-       if(!(requestDoctor.getDireccion().getVia()==null || requestDoctor.getDireccion().getVia().isEmpty()))
+        if(!(requestDoctor.getDireccion().getVia()==null || requestDoctor.getDireccion().getVia().isEmpty()))
            getDoctor.get().getDireccion().setVia(requestDoctor.getDireccion().getVia());
         if(!(requestDoctor.getDireccion().getNumeroPredio()==null || requestDoctor.getDireccion().getNumeroPredio().toString().isEmpty()))
             getDoctor.get().getDireccion().setNumeroPredio(requestDoctor.getDireccion().getNumeroPredio());
@@ -163,8 +171,6 @@ public class DoctorAdapter implements DoctorServiceOut {
         return new ResponseBase(200, "Registro actualizado",doctorRepository.save(getDoctor.get()));
     }
 
-
-
     @Override
     public ResponseBase deleteDoctorOut(String numDoc, String username) {
         Optional<DoctorEntity> findDoctor = doctorRepository.findByNumDocumento(numDoc);
@@ -178,4 +184,5 @@ public class DoctorAdapter implements DoctorServiceOut {
         }
         return new ResponseBase(404, "No se encontro al doctor.", null);
     }
+
 }

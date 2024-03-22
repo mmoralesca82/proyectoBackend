@@ -4,6 +4,8 @@ package com.grupo1.infraestructure.adapter;
 
 import com.grupo1.domain.aggregates.constants.Constants;
 import com.grupo1.domain.aggregates.dto.AnalisisClinicoDTO;
+import com.grupo1.domain.aggregates.dto.ConsultaMedicaDTO;
+import com.grupo1.domain.aggregates.dto.NombreAnalisisDTO;
 import com.grupo1.domain.aggregates.request.RequestRegister;
 import com.grupo1.domain.aggregates.request.RequestResultado;
 import com.grupo1.domain.aggregates.response.MsExternalToHInsuranceRimacResponse;
@@ -19,10 +21,12 @@ import com.grupo1.infraestructure.repository.ConsultaMedicaRepository;
 import com.grupo1.infraestructure.repository.NombreAnalisisRepository;
 import com.grupo1.infraestructure.util.CurrentTime;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnalisisAdapter implements AnalisisServiceOut {
@@ -45,15 +49,10 @@ public class AnalisisAdapter implements AnalisisServiceOut {
 
     @Override
     public ResponseBase BuscarAnalisisDtoOut(Long id) {
-       Optional<AnalisisClinicoEntity> analisisEntity= analisisRepository.findById(id);
+        Optional<AnalisisClinicoEntity> analisisEntity = analisisRepository.findById(id);
        if(analisisEntity.isPresent()){
-           AnalisisClinicoDTO analisisDto = genericMapper.
-                   mapAnalisisClinicoEntityToAnalisiClinicoDTO(analisisEntity.get());
 
-           analisisDto.setNombreDoctor(analisisEntity.get().getConsulta().getDoctor().getNombre()
-           + " " + analisisEntity.get().getConsulta().getDoctor().getApellido());
-           analisisDto.setNombrePaciente(analisisEntity.get().getConsulta().getPaciente().getNombre()
-           + " " +analisisEntity.get().getConsulta().getPaciente().getApellido());
+           AnalisisClinicoDTO analisisDto = BuildAnalisisClinicoDTO(analisisEntity.get());
 
            return new ResponseBase(200, "Registro encontrado con exito",  analisisDto);
        }
@@ -64,9 +63,11 @@ public class AnalisisAdapter implements AnalisisServiceOut {
     public ResponseBase BuscarAllEnableAnalisisDtoOut() {
         List<AnalisisClinicoEntity> listaEntitiy = analisisRepository.findByEstado(true);
         Set<AnalisisClinicoDTO> listaDto = new HashSet<>();
-        for(AnalisisClinicoEntity analisis : listaEntitiy) {
-            AnalisisClinicoDTO analisiDto = genericMapper.mapAnalisisClinicoEntityToAnalisiClinicoDTO(analisis);
-            listaDto.add(analisiDto);
+        for(AnalisisClinicoEntity analisisEntity : listaEntitiy) {
+
+            AnalisisClinicoDTO analisisDto = BuildAnalisisClinicoDTO(analisisEntity);
+
+            listaDto.add(analisisDto);
         }
         return new ResponseBase(200, "Solicitud exitosa", listaDto);
     }
@@ -79,10 +80,10 @@ public class AnalisisAdapter implements AnalisisServiceOut {
             return new ResponseBase (404,
                     "No se encontró el registro de consulta", null);
         //////////////////////////////////////////////////////////
-        ///////// Validar si nombre de analisis existe ///////////
+        ///////// Validar si nombre de analisis existe y está habilitada///////////
         Optional<NombreAnalisisEntity> getNombreAnalisis = nombreAnalisisRepository
                 .findByAnalisis(requestRegister.getNombreAnalisis());
-        if(getNombreAnalisis.isEmpty())
+        if(getNombreAnalisis.isEmpty() || !getNombreAnalisis.get().getEstado())
             return new ResponseBase (404,
                     "No se encontró el nombre de analisis", null);
         //////////////////////////////////////////////////////////
@@ -91,6 +92,9 @@ public class AnalisisAdapter implements AnalisisServiceOut {
         String complejidad = getNombreAnalisis.get().getComplejidad();
         MsExternalToHInsuranceRimacResponse getCobertura = toMSExternalApi.
                 getInfoExtRimac(numDoc, complejidad);
+        if(getCobertura.getCobertura()==0.0){
+            getCobertura.setNomAseguradora(" ");
+        }
 
 
         // Creando la entiedad con Patron de diseño creacional Builder.
@@ -103,6 +107,7 @@ public class AnalisisAdapter implements AnalisisServiceOut {
                 .fechaCreacion(CurrentTime.getTimestamp())
                 .estado(Constants.STATUS_ACTIVE)
                 .build();
+
         AnalisisClinicoEntity saveAnalisis = analisisRepository.save(analisis);
 
         return new ResponseBase(201, "Analisis Clinico registrado con exito",
@@ -113,38 +118,51 @@ public class AnalisisAdapter implements AnalisisServiceOut {
     @Override
     public ResponseBase UpdateTomaMuestraAnalisisOut(Long id, String username) {
         Optional<AnalisisClinicoEntity> getAnalisis = analisisRepository.findById(id);
-        if(getAnalisis.isPresent()){
-            getAnalisis.get().setFechaRecepcion(CurrentTime.getTimestamp());
-            getAnalisis.get().setUsuarioRecepcion(username);
-            getAnalisis.get().setUsuarioModificacion(username);
-            getAnalisis.get().setFechaModificacion(CurrentTime.getTimestamp());
+        if(getAnalisis.isPresent() && getAnalisis.get().getEstado()){
+            if(getAnalisis.get().getUsuarioRecepcion()==null) {
 
-            AnalisisClinicoEntity saveAnalisis = analisisRepository.save(getAnalisis.get());
-            return new ResponseBase(200, "Toma de muestra exitosa", saveAnalisis);
+                getAnalisis.get().setFechaRecepcion(CurrentTime.getTimestamp());
+                getAnalisis.get().setUsuarioRecepcion(username);
+                getAnalisis.get().setUsuarioModificacion(username);
+                getAnalisis.get().setFechaModificacion(CurrentTime.getTimestamp());
+
+                AnalisisClinicoEntity saveAnalisis = analisisRepository.save(getAnalisis.get());
+                return new ResponseBase(200, "Recepcion de muestra exitosa", saveAnalisis);
+            }
+            return new ResponseBase(406, "Ya existe un registro de toma de muestra.", null);
+
         }
 
         return new ResponseBase(404, "Registro no encontrado", null);
     }
+
 
     @Override
     public ResponseBase UpdateResultadoAnalisisOut(RequestResultado requestResultado, String username) {
         Optional<AnalisisClinicoEntity> getAnalisis = analisisRepository.findById(requestResultado.getIdAnalisis());
-        if(getAnalisis.isPresent()){
-            getAnalisis.get().setResultado(requestResultado.getResultado());
-            getAnalisis.get().setUsuarioModificacion(username);
-            getAnalisis.get().setFechaModificacion(CurrentTime.getTimestamp());
+        if(getAnalisis.isPresent()&& getAnalisis.get().getEstado()){
+            if (getAnalisis.get().getUsuarioRecepcion()==null)
+                return new ResponseBase(403, "Pendiente la toma de muestra.", null);
+            if (getAnalisis.get().getResultado()==null) {
 
-            AnalisisClinicoEntity saveAnalisis = analisisRepository.save(getAnalisis.get());
-            return new ResponseBase(200, "Registro de resultado exitoso.", saveAnalisis);
+                getAnalisis.get().setResultado(requestResultado.getResultado());
+                getAnalisis.get().setUsuarioModificacion(username);
+                getAnalisis.get().setFechaModificacion(CurrentTime.getTimestamp());
+
+                AnalisisClinicoEntity saveAnalisis = analisisRepository.save(getAnalisis.get());
+
+                return new ResponseBase(200, "Registro de resultado exitoso.", saveAnalisis);
+            }
+            return new ResponseBase(406, "Ya existe un registro de resultado.", null);
         }
-
         return new ResponseBase(404, "Registro no encontrado", null);
     }
+
 
     @Override
     public ResponseBase DeleteAnalisisOut(Long id, String username) {
             Optional<AnalisisClinicoEntity> getAnalisis = analisisRepository.findById(id);
-            if(getAnalisis.isPresent()){
+            if(getAnalisis.isPresent()&&getAnalisis.get().getUsuarioRecepcion()==null){
                 getAnalisis.get().setEstado(Constants.STATUS_INACTIVE);
                 getAnalisis.get().setFechaEliminacion(CurrentTime.getTimestamp());
                 getAnalisis.get().setUsuarioEliminacion(username);
@@ -154,6 +172,29 @@ public class AnalisisAdapter implements AnalisisServiceOut {
                 return new ResponseBase(200, "Registro borrado con exito", saveAnalisis);
 
             }
-        return new ResponseBase(404, "Registro no encontrado", null);
+        return new ResponseBase(404, "Registro no encontrado o muestra ya fue recepcionada.", null);
+    }
+
+
+    private AnalisisClinicoDTO BuildAnalisisClinicoDTO(AnalisisClinicoEntity analisisEntity){
+        NombreAnalisisDTO nombreAnalisisDTO = genericMapper.mapNombreAnalisisEntityToNombreAnalisisDTO(
+                analisisEntity.getNombreAnalisis());
+        ConsultaMedicaDTO consultaMedicaDTO = genericMapper.mapConsultaMedicaEntityToConsultaMedicaDTO(
+                analisisEntity.getConsulta());
+
+        return  AnalisisClinicoDTO.builder()
+                .idAnalisis(analisisEntity.getIdAnalisis())
+                .nombreSeguro(analisisEntity.getNombreSeguro())
+                .coberturaSeguro(analisisEntity.getCoberturaSeguro())
+                .resultado(analisisEntity.getResultado())
+                .usuarioRecepcion(analisisEntity.getUsuarioRecepcion())
+                .fechaRecepcion(analisisEntity.getFechaRecepcion())
+                .nombreDoctor(analisisEntity.getConsulta().getDoctor().getNombre() + " " +
+                analisisEntity.getConsulta().getDoctor().getApellido())
+                .nombrePaciente(analisisEntity.getConsulta().getPaciente().getNombre()
+                + " " +analisisEntity.getConsulta().getPaciente().getApellido())
+                .nombreAnalisis(nombreAnalisisDTO)
+                .consulta(consultaMedicaDTO)
+                .build();
     }
 }

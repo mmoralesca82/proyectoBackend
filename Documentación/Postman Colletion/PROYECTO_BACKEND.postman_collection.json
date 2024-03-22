@@ -1,0 +1,2263 @@
+{
+	"info": {
+		"_postman_id": "ce1a1777-1040-4a78-8b83-28f34c1a6e3f",
+		"name": "PROYECTO_BACKEND",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32645553"
+	},
+	"item": [
+		{
+			"name": "ms-hinsurance",
+			"item": [
+				{
+					"name": "with requestbody",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "V3ZKz7ZYBU68tiePyTI8MpreRwz12UjjCRtEBzT9oWTAplkFITvRumzGO5Rw2lzh",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numDoc\" : \"41947273\",\r\n    \"cobertura\" : \"LAB1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/rimac/api/v1/find",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"rimac",
+								"api",
+								"v1",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "with RequestParams",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "V3ZKz7ZYBU68tiePyTI8MpreRwz12UjjCRtEBzT9oWTAplkFITvRumzGO5Rw2lzh",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9000/rimac/api/v1/find?documento=41947273&cobertura=LAB3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"rimac",
+								"api",
+								"v1",
+								"find"
+							],
+							"query": [
+								{
+									"key": "documento",
+									"value": "41947273"
+								},
+								{
+									"key": "cobertura",
+									"value": "LAB3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-externalapi",
+			"item": [
+				{
+					"name": "toReniec",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/ms-externalapi/v1/reniec/70242482",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ms-externalapi",
+								"v1",
+								"reniec",
+								"70242482"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "toHealthInsurance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/ms-externalapi/v1/insurance/rimac?documento=41947273&cobertura=MED3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ms-externalapi",
+								"v1",
+								"insurance",
+								"rimac"
+							],
+							"query": [
+								{
+									"key": "documento",
+									"value": "41947273"
+								},
+								{
+									"key": "cobertura",
+									"value": "MED3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ms-security",
+			"item": [
+				{
+					"name": "authenticationController",
+					"item": [
+						{
+							"name": "logins",
+							"item": [
+								{
+									"name": "systemLogin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"system\",\r\n    \"password\" : \"system\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8095/ms-security/v1/autenticacion/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8095",
+											"path": [
+												"ms-security",
+												"v1",
+												"autenticacion",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "adminLogin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"admin\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8095/ms-security/v1/autenticacion/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8095",
+											"path": [
+												"ms-security",
+												"v1",
+												"autenticacion",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "userLogin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"user\",\r\n    \"password\" : \"user\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8095/ms-security/v1/autenticacion/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8095",
+											"path": [
+												"ms-security",
+												"v1",
+												"autenticacion",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "doctorLogin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"doctor\",\r\n    \"password\" : \"doctor\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8095/ms-security/v1/autenticacion/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8095",
+											"path": [
+												"ms-security",
+												"v1",
+												"autenticacion",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "nurseLogin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"nurse\",\r\n    \"password\" : \"nurse\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8095/ms-security/v1/autenticacion/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8095",
+											"path": [
+												"ms-security",
+												"v1",
+												"autenticacion",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "labLogin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\" : \"lab\",\r\n    \"password\" : \"lab\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8095/ms-security/v1/autenticacion/login",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8095",
+											"path": [
+												"ms-security",
+												"v1",
+												"autenticacion",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "verify",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "systemController",
+					"item": [
+						{
+							"name": "registrar sin token en URL",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\" : \"system\",\r\n    \"password\" : \"system\",\r\n    \"email\"    : \"system@hosp.com\",\r\n    \"telefono\" : \"90938499\",\r\n    \"roles\" : [\"SYSTEM\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8095/ms-security/v1/system/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8095",
+									"path": [
+										"ms-security",
+										"v1",
+										"system",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register as SYSTEM",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTA1OTU3MzksImV4cCI6MTcxMDU5NzUzOX0.WLtwxkHJgK1X0oyyZSz9OQ0PksnEn-wJWn3MVhbJKA8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\" : \"all\",\r\n    \"password\" : \"all\",\r\n    \"email\"    : \"all@hosp.com\",\r\n    \"telefono\" : \"90938488\",\r\n    \"roles\" : [\"ADMIN\",\"USER\",\"LAB\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8095/ms-security/v1/system/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8095",
+									"path": [
+										"ms-security",
+										"v1",
+										"system",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUser as SYSTEM by ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTA1OTY0MjAsImV4cCI6MTcxMDU5ODIyMH0.1FKp3t1qR5pK164pgg5dcqffKutusE-Muzjyyli99z8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"telefono\" : \"90938477\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8095/ms-security/v1/system/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8095",
+									"path": [
+										"ms-security",
+										"v1",
+										"system",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update as SYSTEM by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTA1OTY0MjAsImV4cCI6MTcxMDU5ODIyMH0.1FKp3t1qR5pK164pgg5dcqffKutusE-Muzjyyli99z8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"telefono\" : \"90938433\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8095/ms-security/v1/system/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8095",
+									"path": [
+										"ms-security",
+										"v1",
+										"system",
+										"7"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete as SYSTEM by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTA1OTY0MjAsImV4cCI6MTcxMDU5ODIyMH0.1FKp3t1qR5pK164pgg5dcqffKutusE-Muzjyyli99z8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8095/ms-security/v1/system/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8095",
+									"path": [
+										"ms-security",
+										"v1",
+										"system",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ms-registro",
+			"item": [
+				{
+					"name": "DoctorController",
+					"item": [
+						{
+							"name": "buscarDoctorByDoc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDY5MzkxMSwiZXhwIjoxNzEwNjk0MDMxfQ.ABgIyLg1kvcG9MVsra0cxlidTgVpcM6v-sviQisS8AU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/doctor/49362589",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"doctor",
+										"49362589"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllEnableDoctors",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDc3NzMzNywiZXhwIjoxNzEwNzc3NDU3fQ.k40Z7DRBNFN4dRoEXQqyLERkW5xLfbZblt07G6DFj3w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/doctor/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"doctor",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarDoctor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDcyNTYyMywiZXhwIjoxNzEwNzI1NzQzfQ.p9azBHhAgtHmngIn8D5-pxC1vy112TL_4ggj2HepB-0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"numDocumento\" : \"41723317\",\r\n\t\"genero\" : \"masculino\",\r\n\t\"registroMedico\": \"CMP-148965\",\r\n\t\"telefono\" : \"963478549\",\r\n    \"especialidad\" : \"cardiologia\",\r\n\t\"direccion\" : \r\n    {\r\n\t \t\"via\" :   \"Av. Los Cipreses\",\r\n\t\t\"numeroPredio\" : 102 ,\r\n\t\t\"interior\" : \"Dpto 104\",\r\n\t\t\"referencia\": \"Cuadra 23 Av. Universitaria\",\r\n\t\t\"distrito\" : \"San Miguel\",\r\n\t\t\"provincia\": \"Lima\",\r\n\t\t\"departamento\" : \"Lima\"\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/doctor",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"doctor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modificarDoctor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzEwNjk0NzIwLCJleHAiOjE3MTA2OTQ4NDB9.M1G5lol8plkJD8jCdT6OMPCUR9p0x7h73Bn9QusyWHM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"numDocumento\" : \"49362589\",\r\n\t\"genero\" : \"\",\r\n\t\"registroMedico\": \"CMP-148975\",\r\n\t\"teléfono\" : \"\",\r\n\t\"direccion\" : \r\n    {\r\n\t \t\"via\" :   \"\",\r\n\t\t\"numeroPredio\" : \"\",\r\n\t\t\"distrito\" : \"Santiado de Surco\",\r\n\t\t\"provincia\": \"\",\r\n\t\t\"departamento\" : \"\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/doctor",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"doctor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminarDoctor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDY5MzkxMSwiZXhwIjoxNzEwNjk0MDMxfQ.ABgIyLg1kvcG9MVsra0cxlidTgVpcM6v-sviQisS8AU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/doctor/49362589",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"doctor",
+										"49362589"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PacienteController",
+					"item": [
+						{
+							"name": "buscarPacienteByDoc",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDg5NjE5MSwiZXhwIjoxNzEwODk2MzExfQ.9EvFZUQrV3IGF29EBI_8fyD4MuD5TyrGenqxV1htoHM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/paciente/41947273",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"paciente",
+										"41947273"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllEnablePacientes",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDc3NzMzNywiZXhwIjoxNzEwNzc3NDU3fQ.k40Z7DRBNFN4dRoEXQqyLERkW5xLfbZblt07G6DFj3w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/paciente/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"paciente",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarPaciente",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMTEzOTkwNSwiZXhwIjoxNzExMTQwMDI1fQ.UmB07YKjE2UiLl_AzRWP3XDtpS6-hHPp6au4CRjDRF",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"numDocumento\" : \"41854123\",\r\n    \"fechaNacimiento\" : \"24/08/1982\",\r\n\t\"genero\" : \"masculino\",\r\n\t\"telefono\" : \"963478549\",\r\n\t\"direccion\" : \r\n    {\r\n\t \t\"via\" :   \"Av. Mello Franco\",\r\n\t\t\"numeroPredio\" : 208 ,\r\n\t\t\"interior\" : \"Dpto 104\",\r\n\t\t\"referencia\": \"\" ,\r\n\t\t\"distrito\" : \"Jesus Maria\",\r\n\t\t\"provincia\": \"Lima\",\r\n\t\t\"departamento\" : \"Lima\"\r\n    },\r\n    \"contactos\" : [\r\n        {\r\n            \"nombre\" : \"Patricias\",\r\n            \"apellidoPaterno\" : \"Vicente\",\r\n            \"apellidoMaterno\" : \"Sanchez\",\r\n            \"telefono\" : \"985456357\"\r\n        },\r\n        {\r\n            \"nombre\" : \"Zoila\",\r\n            \"apellidoPaterno\" : \"Carranzaz\",\r\n            \"apellidoMaterno\" : \"Carranza\",\r\n            \"telefono\" : \"985645214\"\r\n        }\r\n    ]\r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/paciente",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"paciente"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modificarPaciente",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzExMTM5ODQ5LCJleHAiOjE3MTExMzk5Njl9.dv5zt7q1IBR_zukCvnuaI2S_PSTHRT7wfhn7tET9uP8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"numDocumento\" : \"15674799\",\r\n    \"fechaNacimiento\" : \"24/08/1982\",\r\n\t\"genero\" : \"masculino\",\r\n\t\"telefono\" : \"963478549\",\r\n\t\"direccion\" : \r\n    {\r\n\t \t\"via\" :   \"Av. Mello Franco\",\r\n\t\t\"numeroPredio\" : 208 ,\r\n\t\t\"interior\" : \"Dpto 104\",\r\n\t\t\"referencia\": \"\" ,\r\n\t\t\"distrito\" : \"Jesus Maria\",\r\n\t\t\"provincia\": \"Lima\",\r\n\t\t\"departamento\" : \"Lima\"\r\n    },\r\n    \"contactos\" : [\r\n         {\r\n            \"nombre\" : \"Zoila\",\r\n            \"apellidoPaterno\" : \"Carranza\",\r\n            \"apellidoMaterno\" : \"Carranza\",\r\n            \"telefono\" : \"985645214\"\r\n        },\r\n        {\r\n            \"nombre\" : \"Patricia\",\r\n            \"apellidoPaterno\" : \"Vicente\",\r\n            \"apellidoMaterno\" : \"Sanchez\",\r\n            \"telefono\" : \"985456357\"\r\n        }\r\n    ]\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/paciente",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"paciente"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "eliminarPaciente",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDY5MzkxMSwiZXhwIjoxNzEwNjk0MDMxfQ.ABgIyLg1kvcG9MVsra0cxlidTgVpcM6v-sviQisS8AU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/doctor/49362589",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"doctor",
+										"49362589"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "EspecialidadMedicaController",
+					"item": [
+						{
+							"name": "buscarEspecialidad",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDgxMjU4OCwiZXhwIjoxNzEwODEyNzA4fQ.B3OfdeKcKuNe_qUfJ1QmwaX2o2DBjwgvXHeirK6e9UA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/especialidad/radioterapia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"especialidad",
+										"radioterapia"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllREnableEspecialidad",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDgxMTY0OSwiZXhwIjoxNzEwODExNzY5fQ.IhJTOXaOVK-voBdnSajEKwx_UMgo0P8AhFbjSGuDkOo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/especialidad/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"especialidad",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarEspecialidad",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDgxMjU4OCwiZXhwIjoxNzEwODEyNzA4fQ.B3OfdeKcKuNe_qUfJ1QmwaX2o2DBjwgvXHeirK6e9UA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"especialidad\" : \"radioterapia\",\r\n     \"complejidad\"  : \"MED2\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/especialidad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"especialidad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modificarByNombreEspecilidad",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDgxMjU4OCwiZXhwIjoxNzEwODEyNzA4fQ.B3OfdeKcKuNe_qUfJ1QmwaX2o2DBjwgvXHeirK6e9UA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"especialidad\" : \"radioterapia\",\r\n     \"complejidad\"  : \"MED1\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/especialidad",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"especialidad"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDgxMjc0MywiZXhwIjoxNzEwODEyODYzfQ.OFBYvhQmXfTU8PLUoY_AbYSha2AnpP_J7bJEGhzJizA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/especialidad/7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"especialidad",
+										"7"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "NombreAnalisisController",
+					"item": [
+						{
+							"name": "buscarNombreAnalisis",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDczMDY2MiwiZXhwIjoxNzEwNzMwNzgyfQ.6E0_Dhm1KEDCWs60s69rIPe0j19JKuK-F1fhukvkVVA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/analisis/sangre",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"analisis",
+										"sangre"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllREnableNomAnalisis",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDc3OTgyNiwiZXhwIjoxNzEwNzc5OTQ2fQ.4ffT1LHxowfxrA2Ph9VIn0ChCTCnpRN8l5xlALa1t-g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/analisis/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"analisis",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarNombAnalisis",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDczMzAxMywiZXhwIjoxNzEwNzMzMTMzfQ.bzMbbUh0Xp4rUmtE43xVOcegUlnJUOh-ylFbWNDsBPE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"especialidad\" : \"sangre\",\r\n     \"complejidad\"  : \"LAB3\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/analisis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"analisis"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modificarByNombreAnalisis",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDk4MTYzOSwiZXhwIjoxNzEwOTgxNzU5fQ.F-2MJoVCtGoQmiHi2v4k3YxMYa27Ne07b8xDxoee0D4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"analisis\" : \"sangre\",\r\n     \"complejidad\"  : \"LAB1\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/api/v1/analisis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"api",
+										"v1",
+										"analisis"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteById",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDc4MDQ5MiwiZXhwIjoxNzEwNzgwNjEyfQ.-APT7pj6neem4uJ2GqvtbKhDlAKBpTEBwxHl-hIHZ4s",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8020/ms-registro/v1/api/analisis/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8020",
+									"path": [
+										"ms-registro",
+										"v1",
+										"api",
+										"analisis",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ms-laboratorio",
+			"item": [
+				{
+					"name": "AnalisisController",
+					"item": [
+						{
+							"name": "BuscarEntity ByID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTEwODI2MjksImV4cCI6MTcxMTA4Mjc0OX0.GeVt5BaSGni7aEdcEiughjDrEcryWSew-BxXni1DPEo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis/audit/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis",
+										"audit",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarByID(DTO)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMTA4MjY2NSwiZXhwIjoxNzExMDgyNzg1fQ.tBWcYTBv9TyaFJEuqWuMFSoBLj-DkFp85ZAvcHZ_eOo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis/find/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis",
+										"find",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllEnable(DTO)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMTA4MjY2NSwiZXhwIjoxNzExMDgyNzg1fQ.tBWcYTBv9TyaFJEuqWuMFSoBLj-DkFp85ZAvcHZ_eOo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarAnalisis",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IiLCJpYXQiOjE3MTEwODE5NTUsImV4cCI6MTcxMTA4MjA3NX0.fnmLkQb2uW0IuLudDiioXjiADU4V99tOHeDYze7Sy30",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idConsulta\" : \"2\",\r\n    \"nombreAnalisis\" : \"hemoglobina\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tomaDeMuestra",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYWIiLCJpYXQiOjE3MTEwODIzNTUsImV4cCI6MTcxMTA4MjQ3NX0.Rmy_eyqXx11MuQ50IDZyR0a7nPbZNK21V-1nLvx4ODA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis/muestra/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis",
+										"muestra",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registroResultado",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsYWIiLCJpYXQiOjE3MTEwODI1MzIsImV4cCI6MTcxMTA4MjY1Mn0.LyTk4j1Csu9fnPi4_8jxbZHQQF4mg2662OhwOtDN0xI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"idAnalisis\" : 2,\r\n \"resultado\" : \"akdlslf llslfldl laspwefwjfwj kpkppwefjwepwe  kjqpwkewer.\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis/resultado",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis",
+										"resultado"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EliminarAnalisis By ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDk5NTUwNCwiZXhwIjoxNzEwOTk1NjI0fQ.106c-5VmDYFe6Ul2QdLE8dqb4Z4YtVmiu3HO_N6mjr0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \"idAnalisis\" : 1,\r\n \"resultado\" : \"akdlslf llslfldl laspwefwjfwj kpkppwefjwepwe  kjqpwkewer.\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8040/ms-laboratorio/api/v1/analisis/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8040",
+									"path": [
+										"ms-laboratorio",
+										"api",
+										"v1",
+										"analisis",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ms-medicina",
+			"item": [
+				{
+					"name": "ConsultaMedicaController",
+					"item": [
+						{
+							"name": "buscarConsultaEntity By Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTEwNzM5NTcsImV4cCI6MTcxMTA3NDA3N30.pxCbW1BBcuf_b82iEkXGG427_n41nM6DymKBDqpOgq0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta/audit/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta",
+										"audit",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarProcedimientosForConsulta",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeXN0ZW0iLCJpYXQiOjE3MTEwNzQyOTcsImV4cCI6MTcxMTA3NDQxN30.fo9eWb4qOtYFBteMfT1IdtK9EX7Wk6Ny2ingHBPgxdM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta/audit/procedimiento/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta",
+										"audit",
+										"procedimiento",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarConsutaDTO By Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMTA3NDI4MCwiZXhwIjoxNzExMDc0NDAwfQ.DKRiIVP_Na1xGwnuqFCTxSEhNNCGMmjlvbHKV0uxudo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta/find/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllEnableConsutaDTO",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMTA3NDQxOSwiZXhwIjoxNzExMDc0NTM5fQ.eBCx35ZsjaqlITRg-yGEo71gKbfCNzLYaX7xJKlAZRU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RegistrarConsultaMedica",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzExMDczODEyLCJleHAiOjE3MTEwNzM5MzJ9.YK-Tnf6gLCh9-1kTYgWapx0LfV03tQWaMTIfe_TwmXw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fechaConsulta\" : \"24/03/2024 14:50\",\r\n    \"idDoctor\" : 2,\r\n    \"idPaciente\" : 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AtenderConsultaMedica",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IiLCJpYXQiOjE3MTEwNzUzMzcsImV4cCI6MTcxMTA3NTQ1N30.ptxjnsLvqDvb4kgCJwvrVN8O3BIiww8_mVvHl8Qa0yE",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idConsulta\"  : 1,\r\n    \"sintomas\"     : \"dolor lumbar\",\r\n    \"diagnostico\"  : \"presion 4ta vertebra\",\r\n    \"tratamiento\" : \"terapia fisica\",\r\n    \"notasMedicas\" : \"\",\r\n    \"procedimientos\" :\r\n    [\r\n        {\r\n            \"tipoProcedimiento\": \"ambulatorio\",\r\n            \"notasProcedimiento\" : \"\"\r\n        },\r\n        {\r\n            \"tipoProcedimiento\": \"terapia fisica\",\r\n            \"notasProcedimiento\" : \"3 veces a la semana\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AtenderConsultaMedica Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzExMDc3ODg2LCJleHAiOjE3MTEwNzgwMDZ9.9oUX8bxMHU3B9wvqRPs_1ZnX1fCb_6Q6XuB4RQHnRTU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/consulta/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"consulta",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TriajeController",
+					"item": [
+						{
+							"name": "buscarTriajeEntity by ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJudXJzZSIsImlhdCI6MTcxMTA3NjMxNiwiZXhwIjoxNzExMDc2NDM2fQ.fmXT9Ia3bhqDaVwaAQOEq5Il68l-DA0c7YJOoj7dOOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idConsulta\" : 2,\r\n    \"tempCorporal\" : 35.5,\r\n    \"presionArterial\" : \"114/72\",\r\n    \"satOxigeno\" : 97,\r\n    \"sintoma\" : \"\",\r\n    \"observaciones\" : \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/triaje/audit/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"triaje",
+										"audit",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarTriajeDTO by ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkb2N0b3IiLCJpYXQiOjE3MTEwNzg0MjgsImV4cCI6MTcxMTA3ODU0OH0.rGujlyl0PVxfgErkYPv_TU7FC5X2EdRmfQkOD0PU0KA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idConsulta\" : 2,\r\n    \"tempCorporal\" : 35.5,\r\n    \"presionArterial\" : \"114/72\",\r\n    \"satOxigeno\" : 97,\r\n    \"sintoma\" : \"\",\r\n    \"observaciones\" : \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/triaje/find/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"triaje",
+										"find",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "buscarAllEnableTriajeDTO",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMTA3ODYwMiwiZXhwIjoxNzExMDc4NzIyfQ.pvu6c9Q2LGzngxj2WxAHP7PnPSSnidpCq9dO_8pgYlM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/triaje/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"triaje",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atencion Triaje",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJudXJzZSIsImlhdCI6MTcxMTA3NjMxNiwiZXhwIjoxNzExMDc2NDM2fQ.fmXT9Ia3bhqDaVwaAQOEq5Il68l-DA0c7YJOoj7dOOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idConsulta\" : 2,\r\n    \"tempCorporal\" : 35.5,\r\n    \"presionArterial\" : \"114/72\",\r\n    \"satOxigeno\" : 97,\r\n    \"sintoma\" : \"\",\r\n    \"observaciones\" : \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/triaje",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"triaje"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Eliminar Triaje by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJudXJzZSIsImlhdCI6MTcxMTA3NjMxNiwiZXhwIjoxNzExMDc2NDM2fQ.fmXT9Ia3bhqDaVwaAQOEq5Il68l-DA0c7YJOoj7dOOA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idConsulta\" : 2,\r\n    \"tempCorporal\" : 35.5,\r\n    \"presionArterial\" : \"114/72\",\r\n    \"satOxigeno\" : 97,\r\n    \"sintoma\" : \"\",\r\n    \"observaciones\" : \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8030/ms-medicina/api/v1/triaje/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8030",
+									"path": [
+										"ms-medicina",
+										"api",
+										"v1",
+										"triaje",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -16,19 +16,44 @@ public class PacienteController {
     private final PacienteServiceIn pacienteServiceIn;
     private final VerifyToken verifyToken;
 
+    @GetMapping("/{numDoc}")
+    public ResponseBase buscarPaciente(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+                                     @PathVariable String numDoc){
+        //Add roles autorizados aquí
+        verifyToken.addRole("SYSTEM");
+        //////////////////////////
+        String username = verifyToken.verifyToken(token);
+        if(username != null){
+            return  pacienteServiceIn.buscarDoctorIn(numDoc);
+        }
+        return new ResponseBase(403,"No autorizado.",null);
+    }
+
+    @GetMapping("/all")
+    public ResponseBase buscarAllEnableDoctor(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        //Add roles autorizados aquí
+        verifyToken.addRole("USER");
+        verifyToken.addRole("ADMIN");
+        verifyToken.addRole("SYSTEM");
+        //////////////////////////
+        String username = verifyToken.verifyToken(token);
+        if(username != null){
+            return  pacienteServiceIn.buscarAllEnableDoctorIn();
+        }
+        return new ResponseBase(403,"No autorizado.",null);
+    }
+
     @PostMapping
     public ResponseBase registerPaciente(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                          @RequestBody RequestPaciente requestPaciente){
         //Add roles autorizados aquí
         verifyToken.addRole("USER");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  pacienteServiceIn.registerPacienteIn(requestPaciente, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @PutMapping
@@ -36,31 +61,25 @@ public class PacienteController {
                                          @RequestBody RequestPaciente requestPaciente){
         //Add roles autorizados aquí
         verifyToken.addRole("USER");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  pacienteServiceIn.updatePacienteIn(requestPaciente, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @DeleteMapping("/{numDoc}")
     public ResponseBase deletePaciente(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                           @PathVariable String numDoc){
         //Add roles autorizados aquí
-        verifyToken.addRole("USER");
-        verifyToken.addRole("SYSTEM");
+        verifyToken.addRole("ADMIN");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  pacienteServiceIn.deletePacienteIn(numDoc, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
-
-
 
 }

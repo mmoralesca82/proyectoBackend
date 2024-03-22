@@ -1,7 +1,9 @@
 package com.grupo1.infraestructure.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +21,10 @@ public class ContactoEmergenciaEntity {
     private Long idContactoEmerg;
     @Column(nullable = false, length = 40)
     private String nombre;
-    @Column(nullable = false, length = 40)
-    private String apellido;
+    @Column(nullable = false, length = 20)
+    private String apellidoPaterno;
+    @Column(nullable = false, length = 20)
+    private String apellidoMaterno;
     @Column(nullable = false, length = 15)
     private String telefono;
 
@@ -39,8 +43,8 @@ public class ContactoEmergenciaEntity {
     private Boolean estado;
 
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "contactoEmergencia")
-    @JsonIgnoreProperties("pacientes")
     private Set<PacienteEntity> pacientes;
 
 

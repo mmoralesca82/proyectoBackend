@@ -19,8 +19,8 @@ public class SystemController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<?> createUsuario(@RequestBody SystemRequest usuarioRequest) {
-        return ResponseEntity.ok(systemService.createUsuario(usuarioRequest));
+    public ResponseEntity<?> createUsuario(@RequestBody SystemRequest systemRequest) {
+        return ResponseEntity.ok(systemService.createUsuario(systemRequest));
     }
 
     @GetMapping("/{id}")
@@ -32,9 +32,9 @@ public class SystemController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioEntity> updateUsuario(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @PathVariable Long id,
-                                                       @RequestBody SystemRequest usuarioRequest) {
+                                                       @RequestBody SystemRequest systemRequest) {
         String subjectFromToken = getSubjectFromToken(token);
-        return systemService.updateUsuario(id,usuarioRequest, subjectFromToken);
+        return systemService.updateUsuario(id,systemRequest, subjectFromToken);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUsuario(@PathVariable Long id) {

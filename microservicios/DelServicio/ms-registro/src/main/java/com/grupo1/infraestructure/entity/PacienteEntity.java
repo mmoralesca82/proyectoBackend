@@ -1,12 +1,12 @@
 package com.grupo1.infraestructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 
@@ -14,6 +14,9 @@ import java.util.Set;
 @Table(name="paciente")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PacienteEntity {
 
     @Id
@@ -46,12 +49,12 @@ public class PacienteEntity {
     private Boolean estado;
 
 
-    @JsonIgnore
+    @JsonIgnoreProperties("direccion")
     @ManyToOne(optional = false)
     @JoinColumn(name="id_direccion_fk", nullable = false)
     private DirecccionEntity direccion;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("contactoEmergencia")
     @ManyToMany
     @JoinTable(name="paciente_contacto",
             joinColumns = @JoinColumn(name="id_paciente_fk", nullable = false),

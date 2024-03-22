@@ -21,7 +21,6 @@ public class DoctorController {
     public ResponseBase buscarDoctor(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                      @PathVariable String numDoc){
         //Add roles autorizados aquí
-        verifyToken.addRole("ADMIN");
         verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
@@ -29,7 +28,6 @@ public class DoctorController {
             return  doctorServiceIn.buscarDoctorIn(numDoc);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @GetMapping("/all")
@@ -43,7 +41,6 @@ public class DoctorController {
             return  doctorServiceIn.buscarAllEnableDoctorIn();
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @PostMapping
@@ -51,14 +48,12 @@ public class DoctorController {
                                        @RequestBody RequestDoctor requestDoctor){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  doctorServiceIn.registerDoctorIn(requestDoctor, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @PutMapping
@@ -66,14 +61,12 @@ public class DoctorController {
                                        @RequestBody RequestDoctor requestDoctor){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  doctorServiceIn.updateDoctorIn(requestDoctor, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @DeleteMapping("/{numDoc}")
@@ -81,14 +74,12 @@ public class DoctorController {
                                        @PathVariable String numDoc){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  doctorServiceIn.deleteDoctorIn(numDoc, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
 }

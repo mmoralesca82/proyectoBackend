@@ -39,7 +39,7 @@ public class AnalisisClinicoController {
                                        @PathVariable Long id){
         //Add roles autorizados aquí
 //        verifyToken.addRole("ADMIN");
-        verifyToken.addRole("ADMIM");
+        verifyToken.addRole("ADMIN");
         verifyToken.addRole("LAB");
         verifyToken.addRole("USER");
         verifyToken.addRole("NURSE");

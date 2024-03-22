@@ -2,11 +2,11 @@ package com.grupo1.infraestructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Entity
 @Table(name="consultas_medicas")
@@ -21,9 +21,9 @@ public class ConsultaMedicaEntity {
     private Timestamp fechaConsulta;
     @Column(nullable = true, length = 150)
     private String sintomas;
-    @Column(nullable = false, length = 150)
+    @Column(nullable = true, length = 150)
     private String diagnostico;
-    @Column(nullable = false, length = 150)
+    @Column(nullable = true, length = 150)
     private String tratamiento;
     @Column(length = 150)
     private String notasMedicas;
@@ -60,7 +60,7 @@ public class ConsultaMedicaEntity {
 
 //    @JsonIgnore
 //    @JsonIgnoreProperties("triaje")
-//    @ManyToOne(optional = false)
+//    @ManyToOne(optional = true)
 //    @JoinColumn(name="id_triaje_fk", nullable = false)
 //    private TriajeEntity triaje;
 

@@ -1,8 +1,7 @@
 package com.grupo1.infraestructure.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -11,6 +10,9 @@ import java.sql.Timestamp;
 @Table(name="nombre_analisis")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NombreAnalisisEntity {
 
     @Id

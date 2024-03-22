@@ -10,7 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/api/especialidad")
+@RequestMapping("/api/v1/especialidad")
 @RequiredArgsConstructor
 public class EspecialidadMedicaController {
 
@@ -21,7 +21,6 @@ public class EspecialidadMedicaController {
     public ResponseBase findEspecialidad(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                              @PathVariable String especialidad){
         //Add roles autorizados aquí
-        verifyToken.addRole("ADMIN");
         verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
@@ -29,7 +28,6 @@ public class EspecialidadMedicaController {
             return  especialidadMedicaServiceIn.findEspecialidadMedicaIn(especialidad);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @GetMapping("/all")
@@ -43,7 +41,6 @@ public class EspecialidadMedicaController {
             return  especialidadMedicaServiceIn.findAllEnableEspecialidadMedicaIn();
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @PostMapping
@@ -51,14 +48,12 @@ public class EspecialidadMedicaController {
                                              @RequestBody EspecialidadMedicaDTO especialidadMedicaDTO){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  especialidadMedicaServiceIn.registerEspecialidadMedicaIn(especialidadMedicaDTO, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @PutMapping
@@ -66,14 +61,12 @@ public class EspecialidadMedicaController {
                                        @RequestBody EspecialidadMedicaDTO especialidadMedicaDTO){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  especialidadMedicaServiceIn.updateEspecialidadMedicaIn(especialidadMedicaDTO, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
 
     @DeleteMapping("/{id}")
@@ -81,13 +74,12 @@ public class EspecialidadMedicaController {
                                        @PathVariable Long id){
         //Add roles autorizados aquí
         verifyToken.addRole("ADMIN");
-        verifyToken.addRole("SYSTEM");
         //////////////////////////
         String username = verifyToken.verifyToken(token);
         if(username != null){
             return  especialidadMedicaServiceIn.deleteEspecialidadMedicaIn(id, username);
         }
         return new ResponseBase(403,"No autorizado.",null);
-
     }
+
 }

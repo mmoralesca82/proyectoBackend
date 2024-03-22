@@ -15,6 +15,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class PacienteServiceImpl implements PacienteServiceIn {
 
     private final PacienteServiceOut pacienteServiceOut;
+
+    @Override
+    public ResponseBase buscarDoctorIn(String numDoc) {
+        return pacienteServiceOut.buscarDoctorOut(numDoc);
+    }
+
+    @Override
+    public ResponseBase buscarAllEnableDoctorIn() {
+        return pacienteServiceOut.buscarAllEnableDoctorOut();
+    }
+
     @Override
     public ResponseBase registerPacienteIn(RequestPaciente requestPaciente, String username) {
         return pacienteServiceOut.registerPacienteOut(requestPaciente,username);

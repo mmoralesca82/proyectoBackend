@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConsultaMedicaDTO {
 

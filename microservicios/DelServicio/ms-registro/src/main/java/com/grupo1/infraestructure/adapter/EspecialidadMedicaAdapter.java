@@ -1,5 +1,6 @@
 package com.grupo1.infraestructure.adapter;
 
+import com.grupo1.domain.aggregates.constants.CoberturasSeguro;
 import com.grupo1.domain.aggregates.constants.Constants;
 import com.grupo1.domain.aggregates.dto.EspecialidadMedicaDTO;
 import com.grupo1.domain.aggregates.response.ResponseBase;
@@ -23,7 +24,6 @@ public class EspecialidadMedicaAdapter implements EspecialidadMedicaServiceOut {
     private final GenericMapper genericMapper;
 
     @Override
-
     public ResponseBase findEspecialidadMedicaOut(String especialidad) {
         Optional<EspecialidadMedicaEntity> getEspecialidad = especialidadMedicaRepository.findByEspecialidad(especialidad);
         if (getEspecialidad.isPresent()) {
@@ -45,10 +45,15 @@ public class EspecialidadMedicaAdapter implements EspecialidadMedicaServiceOut {
 
     @Override
     public ResponseBase registerEspecialidadMedicaOut(EspecialidadMedicaDTO especialidadMedicaDTO, String username) {
-        if((especialidadMedicaDTO.getEspecialidad()==null || especialidadMedicaDTO.getEspecialidad().isEmpty()) ||
-        !(especialidadMedicaDTO.getComplejidad().equals("MED1") ||
-                especialidadMedicaDTO.getComplejidad().equals("MED2") ||
-                especialidadMedicaDTO.getComplejidad().equals("MED3"))){
+        boolean coberturaValida = false;
+        for(String cob : CoberturasSeguro.coberturaMED) {
+            if (cob.equals(especialidadMedicaDTO.getComplejidad())){
+                coberturaValida = true;
+                break;
+            }
+        }
+        if((especialidadMedicaDTO.getEspecialidad()==null ||
+                especialidadMedicaDTO.getEspecialidad().isEmpty()) || !coberturaValida){
             return new ResponseBase(406, "Error en la informacion", null);
         }
         Optional<EspecialidadMedicaEntity> getEspecialidad = especialidadMedicaRepository.
@@ -56,12 +61,15 @@ public class EspecialidadMedicaAdapter implements EspecialidadMedicaServiceOut {
         if (getEspecialidad.isPresent()) {
             return new ResponseBase(406, "La especialidad ya existe", null);
         }
-        EspecialidadMedicaEntity especialidadMedica = new EspecialidadMedicaEntity();
-        especialidadMedica.setEspecialidad(especialidadMedicaDTO.getEspecialidad());
-        especialidadMedica.setComplejidad(especialidadMedicaDTO.getComplejidad());
-        especialidadMedica.setUsuarioCreacion(username);
-        especialidadMedica.setFechaCreacion(CurrentTime.getTimestamp());
-        especialidadMedica.setEstado(Constants.STATUS_ACTIVE);
+
+
+        EspecialidadMedicaEntity especialidadMedica = EspecialidadMedicaEntity.builder()
+                .especialidad(especialidadMedicaDTO.getEspecialidad())
+                .complejidad(especialidadMedicaDTO.getComplejidad())
+                .usuarioCreacion(username)
+                .fechaCreacion(CurrentTime.getTimestamp())
+                .estado(Constants.STATUS_ACTIVE)
+                .build();
 
         especialidadMedica = especialidadMedicaRepository.save(especialidadMedica);
 
@@ -73,16 +81,21 @@ public class EspecialidadMedicaAdapter implements EspecialidadMedicaServiceOut {
        Optional<EspecialidadMedicaEntity> findEspecialidad = especialidadMedicaRepository.
                findByEspecialidad(especialidadMedicaDTO.getEspecialidad());
        if(findEspecialidad.isPresent()){
-           if(especialidadMedicaDTO.getComplejidad().equals("MED1") || especialidadMedicaDTO.getComplejidad().equals("MED2") ||
-                   especialidadMedicaDTO.getComplejidad().equals("MED3")){
+           boolean coberturaValida = false;
+           for(String cob : CoberturasSeguro.coberturaMED) {
+               if (cob.equals(especialidadMedicaDTO.getComplejidad())){
+                   coberturaValida = true;
+                   break;
+               }
+           }
+           if(coberturaValida){
                 findEspecialidad.get().setComplejidad(especialidadMedicaDTO.getComplejidad());
                 findEspecialidad.get().setUsuarioModificacion(username);
                 findEspecialidad.get().setFechaModificacion(CurrentTime.getTimestamp());
-
-
                 return new ResponseBase(200, "Registro actualizado",
                         especialidadMedicaRepository.save(findEspecialidad.get()));
-           }
+           } return new ResponseBase(404, "Complejidad no existe.", null);
+
        }
         return new ResponseBase(404, "No se encontro la especialidad.", null);
     }

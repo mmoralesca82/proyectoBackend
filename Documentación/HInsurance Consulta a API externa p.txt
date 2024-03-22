@@ -41,12 +41,13 @@ MS-Registro Service:(PORT: 8020) Registro de pacientes y doctores:
 			Direccion 
 			Doctor 
 
-MS-Medicina Service: (PORT: 8030) Registro y atención de Triaje y Procedimiento médico.
+MS-Medicina Service: (PORT: 8030) Registro y atención de consulta, triaje y procedimiento médico.
 			
 		Nivel de seguridad:
-			Registro/modificacion y atención de triaje: NURSE
-			Registro de procedimiento médico: USER
-			Modificacion de prodcimiento médico: USER, DOCTOR
+			Registro de consulta/triaje: USER
+			Atención de triaje: NURSE
+			Atención de consulta medica(creación de procedimientos): DOCTOR
+			ELIMINAR consulta medica (incluye sus procedimientos): ADMIN
 
  		Entidades involucradas: (DB: HospService)
 			Paciente 

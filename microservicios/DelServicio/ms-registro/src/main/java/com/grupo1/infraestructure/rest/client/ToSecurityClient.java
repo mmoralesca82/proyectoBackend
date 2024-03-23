@@ -2,7 +2,6 @@ package com.grupo1.infraestructure.rest.client;
 
 
 import com.grupo1.domain.aggregates.response.MsSecurityResponse;
-import com.grupo1.infraestructure.rest.ToSecurityError;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +11,9 @@ import java.util.Optional;
 
 
 
-@FeignClient(name="MS-SECURITY", url  = "http://localhost:8095/ms-security/v1/autenticacion/",
-                configuration = ToSecurityError.class)
+//@FeignClient(name="MS-SECURITY", url  = "http://localhost:8095/ms-security/v1/autenticacion/",
+//                configuration = ToSecurityError.class)
+@FeignClient(name="MS-SECURITY", url  = "http://localhost:8095/ms-security/v1/autenticacion/")
 public interface ToSecurityClient {
 
     @GetMapping("/verify")

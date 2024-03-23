@@ -18,10 +18,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private  final JWTService jwtService;
 
+
     @PostMapping("/login") // Logeo
     public ResponseEntity<AuthenticationResponse> signin(@RequestBody SignInRequest signinRequest){
         return ResponseEntity.ok(authenticationService.signin(signinRequest));
     }
+
 
     @GetMapping("verify")  // metodo usado por los micros servicios para obtener roles desde el token
     public VerifyResponse getRoles(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){

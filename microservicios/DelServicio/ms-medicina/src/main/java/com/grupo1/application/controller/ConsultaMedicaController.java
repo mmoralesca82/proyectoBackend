@@ -8,6 +8,9 @@ import com.grupo1.domain.aggregates.request.RequestRegister;
 import com.grupo1.domain.aggregates.request.RequestAtencionMedica;
 import com.grupo1.domain.aggregates.response.ResponseBase;
 import com.grupo1.domain.ports.in.ConsultaMedicaServiceIn;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/consulta")
 @RequiredArgsConstructor
+@OpenAPIDefinition(
+        info = @Info(
+                title = "API MS-MEDICINA / CONSULTA MEDICA",
+                version = "1.0",
+                description = "Registro y atencion de Consultas medicas."
+        )
+)
 public class ConsultaMedicaController {
 
     private final ConsultaMedicaServiceIn consultaMedicaServiceIn;
@@ -25,6 +35,7 @@ public class ConsultaMedicaController {
     private final FormatMessage formatMessage;
 
 
+    @Operation(summary = "Busqueda de consultas medicas por id con retorno de entity, permitido solo para SYSTEM")
     @GetMapping("/audit/{id}")
     public ResponseBase buscarConsultaMedicaEntity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                      @PathVariable Long id ){
@@ -39,7 +50,7 @@ public class ConsultaMedicaController {
         return new ResponseBase(403,"No autorizado.",null);
 
     }
-
+    @Operation(summary = "Busqueda de procedimientos por id de consulta con retorno de entity, permitido solo para SYSTEM")
     @GetMapping("/audit/procedimiento/{idConsulta}")
     public ResponseBase BuscarAllProcedimientoMedicoEntity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                    @PathVariable Long idConsulta){
@@ -54,7 +65,8 @@ public class ConsultaMedicaController {
 
     }
 
-    @GetMapping("/find/{id}") // id porque busco un unico analisis
+    @Operation(summary = "Busqueda de consultas medicas por id con retorno de DTO, permitido para ADMIN, USER, DOCTOR y NURSE.")
+        @GetMapping("/find/{id}")
     public ResponseBase buscarConsultaMedicaDTO(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                        @PathVariable Long id){
         //Add roles autorizados aquí
@@ -73,6 +85,7 @@ public class ConsultaMedicaController {
 
     }
 
+    @Operation(summary = "Busqueda de todas las consultas medicas con estado habilitado con retorno de DTOs, permitido para SYSTEM, ADMIN y USER.")
     @GetMapping("/all")
     public ResponseBase buscarAllEnableConsultaMedicaDTO(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         //Add roles autorizados aquí
@@ -88,6 +101,8 @@ public class ConsultaMedicaController {
 
     }
 
+
+    @Operation(summary = "Registrar consulta medica, permitido para USER.")
     //Crea una consulta y triaje vacíos
     @PostMapping
     public ResponseBase registerConsultaMedica(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
@@ -107,7 +122,7 @@ public class ConsultaMedicaController {
 
     }
 
-
+    @Operation(summary = "Registro de atencion de consulta medica, permitido para DOCTOR.")
     /// Atención de consulta y registro de procedimientos
     @PutMapping("")
     public ResponseBase updateAtencionConsultaMedica(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
@@ -127,7 +142,7 @@ public class ConsultaMedicaController {
 
     }
 
-
+    @Operation(summary = "Eliminado lógico de cosulta medica, permitido para ADMIN y USER.")
     //Borra consulta y procedimientos asociados a la consulta.
     @DeleteMapping("/{id}")
     public ResponseBase deleteConsultaMedica(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,

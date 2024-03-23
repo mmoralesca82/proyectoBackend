@@ -8,6 +8,9 @@ import com.grupo1.application.util.VerifyToken;
 import com.grupo1.domain.aggregates.request.RequestTriaje;
 import com.grupo1.domain.aggregates.response.ResponseBase;
 import com.grupo1.domain.ports.in.TriajeServiceIn;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.validation.BindingResult;
@@ -20,9 +23,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/api/v1/triaje")
 @RequiredArgsConstructor
+@OpenAPIDefinition(
+        info = @Info(
+                title = "API MS-MEDICINA / TRIAJE",
+                version = "1.0",
+                description = "Atencion de triaje."
+        )
+)
 public class TriajeController {
 
     private final TriajeServiceIn triajeServiceIn;
@@ -30,6 +41,7 @@ public class TriajeController {
     private final FormatMessage formatMessage;
 
 
+    @Operation(summary = "Busqueda de triaje por id con retorno de entity, permitido solo para SYSTEM")
     @GetMapping("/audit/{id}")
     public ResponseBase buscarTriajeEntity(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                    @PathVariable Long id ){
@@ -45,6 +57,7 @@ public class TriajeController {
 
     }
 
+    @Operation(summary = "Busqueda de triaje por id con retorno de DTO, permitido para ADMIN, USER, DOCTOR y NURSE.")
     @GetMapping("/find/{id}")
     public ResponseBase buscarTriajeDTO(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                 @PathVariable Long id){
@@ -64,6 +77,7 @@ public class TriajeController {
 
     }
 
+    @Operation(summary = "Busqueda de todos los triajes con estado habilitado con retorno de DTOs, permitido para ADMIN, SYSTEM, USER Y NURSE.")
     @GetMapping("/all")
     public ResponseBase buscarAllEnableTriajeDTO(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         //Add roles autorizados aquí
@@ -80,6 +94,7 @@ public class TriajeController {
 
     }
 
+    @Operation(summary = "Registro de atencion de triaje, permitido para NURSE.")
     /// Atención de triaje
     @PutMapping()
     public ResponseBase updateAtencionTriaje(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
@@ -98,6 +113,7 @@ public class TriajeController {
 
     }
 
+    @Operation(summary = "Eliminado lógico de triaje, permitido para ADMIN.")
     @DeleteMapping("/{id}")
     public ResponseBase deleteTriaje(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                              @PathVariable Long id){
